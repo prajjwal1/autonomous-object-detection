@@ -1,6 +1,5 @@
 ## Domain adaptive Object detection for autonomous navigation 
-
-This repository provides base support for performing object detection. Features for domain adaptation are in experimental phase.
+This repository provides core support for performing object detection on navigation datasets. Support for 3D object detection and domain adaptation are in experimental phase and will be added later.
 ## Prerequisites
 - Pytorch >=1.1
 - torchvision ==0.3
@@ -45,13 +44,16 @@ $ python3 get_datalists_cityscapes.py
 It assumes that datalists have been created. This step ensures that you won't get bad samples while dataloader iterates. Create a dir named `data` and put all datasets inside it.
 This library uses a common API (similar to torchvision). 
 All datasets class expect the same inputs:
+```
 Input:
     idd_image_path_list
     idd_anno_path_list
     get_transform: A transformation function.
+```
+```
 Output:
-    A dict containing boxes, labels, image_id, area, iscrowd
-
+    A dict containing boxes, labels, image_id, area, iscrowd inside a torch.tensor.
+```
 - IDD
 
 ```
