@@ -21,21 +21,26 @@ You need to specify a proper path in the following scripts and then it would run
 
 For BDD100K :
 
-`
+```
 $ python3 get_datalists_bdd100k.py
-`
+```
 
 For IDD :
 
-`
-$ python3 get_datalists_idd_non_hq.py   # For non HQ image set
-$ python3 get_datalists_idd_hq.py       # For HQ image set
-`
+```
+$ python3 get_datalists_idd_non_hq.py   
+
+$ python3 get_datalists_idd_hq.py       
+```
+
+for non HQ image set and HQ image set respectively.
 
 For cityscapes :
-`
+
+```
 $ python3 get_datalists_cityscapes.py
-`
+```
+
 ### Datasets
 It assumes that datalists have been created. This step ensures that you won't get bad samples while dataloader iterates. Create a dir named `data` and put all datasets inside it.
 This library uses a common API (similar to torchvision). 
@@ -49,27 +54,34 @@ Output:
 
 - IDD
 
-`dset = IDD(idd_image_path_list,idd_anno_path_list,transforms=None)`
+```
+dset = IDD(idd_image_path_list,idd_anno_path_list,transforms=None)
+```
 
 - BDD100K 
 
-`dset = BDD(bdd_img_path_list,train_anno_json_path,transforms=None)`
+```
+dset = BDD(bdd_img_path_list,train_anno_json_path,transforms=None)
+```
 
 BDD100k doesn't provide individual ground truths. A single JSON file is provided. So creating dataset takes a little longer than usual for parsing JSON.
 
 - Cityscapes
 
-`dset = Cityscapes(image_path_list,target_path_list, split='train',transforms=None)`
+```
+dset = Cityscapes(image_path_list,target_path_list, split='train',transforms=None)
+```
 
 This was tested for Citypersons (GTs for person class). You can extract GTs from segmentation as well, but user would have to manage datalists.
 
 ### Transforms
-- `get_transforms(bool:train)` 
+- ```get_transforms(bool:train)```
 
 converts images into tensors and applies Random Horizontal flipping on input data.
 
 ### Model
 Any detection model can be used (Yolo,FasterRCNN,SSD). Currently we provide support from torchvision.
+
 ```
 from train_baseline import get_model
 model = get_model(len(classes))    # Returns a Faster RCNN with Resnet 50 as backbone pretrained on COCO.
@@ -79,22 +91,22 @@ model = get_model(len(classes))    # Returns a Faster RCNN with Resnet 50 as bac
 Support for baseline has been added. Domain adaptive features will be added later.
 Users need to specify the path in the script (in user defined settings section) and dataset 
 
-`
+```
 $ python train_baseline.py
-`
+```
 
 ### Evaluation
 It performs evaluation in COCO style. Users need to specify saved model path on which evaluation is supposed to occur. CocoAPI needs to be compiled.
-`
+```
 $ cd cocoapi/PythonAPI
 $ python setup.py build_ext install
-`
+```
 
 Now evaluation can be performed.
 
-`
+```
 $ python3 evaluation_baseline.py
-`
+```
 
 ### Visualization
 
