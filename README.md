@@ -19,16 +19,23 @@ Use these scripts to generate your own datalists.
 
 You need to specify a proper path in the following scripts and then it would run seamlessly.
 
-For BDD100K, use :
-$ python3 get_datalists_bdd100k.py
+For BDD100K :
 
-For IDD, use:
+`
+$ python3 get_datalists_bdd100k.py
+`
+
+For IDD :
+
+`
 $ python3 get_datalists_idd_non_hq.py   # For non HQ image set
 $ python3 get_datalists_idd_hq.py       # For HQ image set
+`
 
-For cityscapes
+For cityscapes :
+`
 $ python3 get_datalists_cityscapes.py
-
+`
 ### Datasets
 It assumes that datalists have been created. This step ensures that you won't get bad samples while dataloader iterates. Create a dir named `data` and put all datasets inside it.
 This library uses a common API (similar to torchvision). 
