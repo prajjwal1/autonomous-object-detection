@@ -10,10 +10,19 @@ This work provides support for these datasets related to object detection:
 - India Driving Dataset
 - Berkeley Deep drive
 
+Directory structure :
+```
++-- data
+|   +-- bdd100k
+|   +-- IDD
+|   +-- cityscapes
++-- autonmous-object-detection
+.......
+```
 ## Documentation
 
 ### Datalists
-We use datalists. Datalists are lists which contains path to images and labels. This is because some of the images don't have proper labels. Datalists ensure that the lists only contain structured usable data (dataloader would work seamlessly). Data cleaning happens in the process.
+We use something called datalists. Datalists are lists which contains path to images and labels. This is because some of the images don't have proper labels. Datalists ensure that the lists only contain structured usable data (dataloader would work seamlessly). Data cleaning happens in the process.
 Use these scripts to generate your own datalists. 
 
 You need to specify a proper path in the following scripts and then it would run seamlessly.
