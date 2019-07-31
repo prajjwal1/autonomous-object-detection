@@ -11,7 +11,6 @@ import transforms as T
 from tqdm import tqdm
 from torch import nn
 
-from transforms import *
 
 def get_ground_truths(train_img_path_list,anno_data):
 
