@@ -1,18 +1,20 @@
 from imports import *
 import pickle
 from datasets.bdd import *
-
+from datasets.idd import *
 device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 ########################      User Specific settings             #####################
-path = '/ml/temp/autonue/data/bdd100k/'
+path = '/home/jupyter/autonue/data'
 batch_size = 4
-dset = "IDD"
+dset = "BDD"
 num_epochs = 25
+lr = 0.001
+ckpt=False
 ######################################################################################
 
 if dset=="BDD":
-    root_img_path = os.path.join(path,'images','100k')
-    root_anno_path = os.path.join(path,'labels')
+    root_img_path = os.path.join(path,'bdd100k','images','100k')
+    root_anno_path = os.path.join(path,'bdd100k','labels')
     
     train_img_path = root_img_path+'/train/'
     val_img_path = root_img_path+'/val/'
@@ -43,7 +45,7 @@ if dset=="IDD":
     
     images = non_hq_img_paths #+ hq_img_paths
     annos = non_hq_anno_paths#hq_anno_paths + 
-    dataset_train = IDD(images,anno,get_transform(train=True))
+    dataset_train = IDD(images,annos,get_transform(train=True))
     dl =  torch.utils.data.DataLoader(dataset_train, batch_size=batch_size, shuffle=True, num_workers=4,collate_fn=utils.collate_fn)
     
     
@@ -58,7 +60,7 @@ def get_model(num_classes):
 
           
 
-print("Model initiation")
+print("Model initialization")
 model = get_model(len(dataset_train.classes))
 model.to(device)
 params = [p for p in model.parameters() if p.requires_grad]
@@ -72,9 +74,10 @@ except:
     pass
 
 
-checkpoint = torch.load('saved_models/sideRight.pth')
-model.load_state_dict(checkpoint['model_state_dict'])
-#optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
+if ckpt:
+    checkpoint = torch.load('saved_models/sideRight.pth')
+    model.load_state_dict(checkpoint['model_state_dict'])
+    optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
 #epoch = checkpoint['epoch']
 
 
