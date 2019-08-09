@@ -63,7 +63,7 @@ class IDD(torch.utils.data.Dataset):
         
         labels = self.get_label_bboxes(self.anno[idx])[0]
         bboxes = self.get_label_bboxes(self.anno[idx])[1]
-        
+        labels = labels.type(torch.int64)
         img_id = Tensor([idx])
         area = (bboxes[:, 3] - bboxes[:, 1]) * (bboxes[:, 2] - bboxes[:, 0])
             
@@ -132,3 +132,4 @@ class IDD_Test(torch.utils.data.Dataset):
         target["iscrowd"] = iscrowd
 
         return img, target
+
