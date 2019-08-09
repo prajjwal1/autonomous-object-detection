@@ -12,7 +12,7 @@ from os import path
 from tqdm import tqdm
 from torch import Tensor
 ################################            User defined settings      ############################
-path = '/ml/temp/autonue/data/IDD_Detection'
+path = '/home/jupyter/autonue/data/IDD_Detection'
 ################################################################################################
 root_anno_path = os.path.join(path,'Annotations')
 root_img_path = os.path.join(path,'JPEGImages')
@@ -180,7 +180,7 @@ obj_anno_0[0],obj_anno_0[1]
 print("######################")
 
 ## Removing empty stuff
-print("Problematic images Found, fixing them")
+cnt=0
 for i,a in tqdm(enumerate(frontFar_anno_path)):
     obj_anno_0 = get_obj_bboxes(frontFar_anno_path[i])
     if not obj_anno_0[0]:
@@ -188,6 +188,7 @@ for i,a in tqdm(enumerate(frontFar_anno_path)):
         a = a.replace('Annotations','JPEGImages')
         a = a.replace('xml','jpg')
         frontFar_img_path.remove(a)
+        cnt+=1
         #print("Problematic", a)
         
 for i,a in tqdm(enumerate(frontNear_anno_path)):
@@ -197,6 +198,7 @@ for i,a in tqdm(enumerate(frontNear_anno_path)):
         a = a.replace('Annotations','JPEGImages')
         a = a.replace('xml','jpg')
         frontNear_img_path.remove(a)
+        cnt+=1
         #print("Problematic", a)
         
 for i,a in tqdm(enumerate(rearNear_anno_path)):
@@ -206,6 +208,7 @@ for i,a in tqdm(enumerate(rearNear_anno_path)):
         a = a.replace('Annotations','JPEGImages')
         a = a.replace('xml','jpg')
         rearNear_img_path.remove(a)
+        cnt+=1
         #print("Problematic", a)
         
 for i,a in tqdm(enumerate(sideLeft_anno_path)):
@@ -215,6 +218,7 @@ for i,a in tqdm(enumerate(sideLeft_anno_path)):
         a = a.replace('Annotations','JPEGImages')
         a = a.replace('xml','jpg')
         sideLeft_img_path.remove(a)
+        cnt+=1
         #print("Problematic", a)
         
 for i,a in tqdm(enumerate(sideRight_anno_path)):
@@ -224,8 +228,9 @@ for i,a in tqdm(enumerate(sideRight_anno_path)):
         a = a.replace('Annotations','JPEGImages')
         a = a.replace('xml','jpg')
         sideRight_img_path.remove(a)
+        cnt+=1
         #print("Problematic", a)
-
+print("Images without annotations ", cnt)
 print("Doing sanity check again")
 ## Matching Images and Annotations
 print(frontFar_img_path[100]) 
@@ -243,62 +248,13 @@ obj_anno_0[0],obj_anno_0[1]
 print("Creating Dataset path list")
 
 idd_images_path_list = frontFar_img_path+frontNear_img_path+rearNear_img_path+sideLeft_img_path+sideRight_img_path
-            idd_anno_path_list = frontFar_anno_path+frontNear_anno_path+rearNear_anno_path+sideLeft_anno_path+sideRight_anno_path
+idd_anno_path_list = frontFar_anno_path+frontNear_anno_path+rearNear_anno_path+sideLeft_anno_path+sideRight_anno_path
 
 with open("datalists/idd_images_path_list.txt", "wb") as fp:
         pickle.dump(idd_images_path_list, fp)
 
 with open("datalists/idd_anno_path_list.txt", "wb") as fp:
     pickle.dump(idd_anno_path_list, fp)
-
-# with open("frontNear_img.txt", "wb") as fp:
-#     pickle.dump(frontNear_img_path, fp)
-
-# with open("frontNear_anno.txt", "wb") as fp:
-#     pickle.dump(frontNear_anno_path, fp)
-
-# with open("rearNear_img.txt", "wb") as fp:
-#     pickle.dump(rearNear_img_path, fp)
-
-# with open("rearNear_anno.txt", "wb") as fp:
-#     pickle.dump(rearNear_anno_path, fp)
-
-# with open("sideLeft_img.txt", "wb") as fp:
-#     pickle.dump(sideLeft_img_path, fp)
-
-# with open("sideLeft_anno.txt", "wb") as fp:
-#     pickle.dump(sideLeft_anno_path, fp)
-
-# with open("sideRight_img.txt", "wb") as fp:
-#     pickle.dump(sideRight_img_path, fp)
-
-# with open("sideRight_anno.txt", "wb") as fp:
-#     pickle.dump(sideRight_anno_path, fp)
-
-    
-# assert len(frontFar_img_path)==len(frontFar_anno_path)
-# assert len(frontNear_img_path)==len(frontNear_anno_path)
-# assert len(rearNear_img_path)==len(rearNear_anno_path)
-# assert len(sideLeft_img_path)==len(sideLeft_anno_path)
-# assert len(sideRight_img_path)==len(sideRight_anno_path)
-
-# print("Moving files")
-
-# if os.path.exists('datalists_non_hq'):
-#     pass
-# else:
-#     os.mkdir('datalists_non_hq')
-    
-# shutil.move('frontFar_img.txt', 'datalists_non_hq/frontFar_img.txt')
-# shutil.move('frontFar_anno.txt','datalists_non_hq/frontFar_anno.txt')
-# shutil.move('frontNear_img.txt','datalists_non_hq/frontNear_img.txt')
-# shutil.move('frontNear_anno.txt','datalists_non_hq/frontNear_anno.txt')
-# shutil.move('rearNear_img.txt','datalists_non_hq/rearNear_img.txt')
-# shutil.move('rearNear_anno.txt','datalists_non_hq/rearNear_anno.txt')
-# shutil.move('sideLeft_img.txt','datalists_non_hq/sideLeft_img.txt')
-# shutil.move('sideLeft_anno.txt','datalists_non_hq/sideLeft_anno.txt')
-# shutil.move('sideRight_img.txt','datalists_non_hq/sideRight_img.txt')
-# shutil.move('sideRight_anno.txt','datalists_non_hq/sideRight_anno.txt')
 
 
 print("Successfully completed")
