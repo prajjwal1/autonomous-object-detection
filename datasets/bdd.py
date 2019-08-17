@@ -20,8 +20,6 @@ def get_ground_truths(train_img_path_list,anno_data):
             'train':8,'rider':9,'drivable area':10,'lane':11}
 
     for i in tqdm(range(len(train_img_path_list))):
-        #img_id = anno_data[i]['name']
-        #img_path = train_img_path+img_id
         for j in range(len(anno_data[i]['labels'])):
             if 'box2d' in anno_data[i]['labels'][j]:
                 xmin = anno_data[i]['labels'][j]['box2d']['x1']

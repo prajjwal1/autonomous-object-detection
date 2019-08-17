@@ -1,18 +1,17 @@
 import torch,os
 from pathlib import Path
 import xml.etree.ElementTree as ET
-from glob import glob
-import matplotlib.pyplot as plt
 from torch.utils.data import Dataset,DataLoader, SequentialSampler, RandomSampler
 import torchvision
 from torchvision import transforms
 from PIL import Image
 import numpy as np
-import matplotlib
-import matplotlib.pyplot as plt
 from torch import Tensor,FloatTensor
 import utils
 import transforms as T
+from coco_eval import CocoEvaluator
+import time
+from coco_utils import get_coco_api_from_dataset
 
 
 def get_transform(train):

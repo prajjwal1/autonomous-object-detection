@@ -2,19 +2,12 @@ from imports import *
 import pickle
 from datasets.bdd import *
 from datasets.idd import *
+from cfg import *
 device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
-########################      User Specific settings             #####################
-path = '/home/jupyter/autonue/data'
-batch_size = 4
-dset = "BDD"
-num_epochs = 25
-lr = 0.001
-ckpt=False
-######################################################################################
 
-if dset=="BDD":
-    root_img_path = os.path.join(path,'bdd100k','images','100k')
-    root_anno_path = os.path.join(path,'bdd100k','labels')
+if ds=="bdd100k":
+    root_img_path = os.path.join(bdd_path,'bdd100k','images','100k')
+    root_anno_path = os.path.join(bdd_path,'bdd100k','labels')
     
     train_img_path = root_img_path+'/train/'
     val_img_path = root_img_path+'/val/'
@@ -32,23 +25,21 @@ if dset=="BDD":
     dataset_train = dset = BDD(train_img_path_list,train_anno_json_path,get_transform(train=True))
     dl =  torch.utils.data.DataLoader(dataset_train, batch_size=batch_size, shuffle=True, num_workers=4,collate_fn=utils.collate_fn) 
 
-if dset=="IDD":
-    #with open("datalists/idd_hq_images_path_list.txt", "rb") as fp:
-    #    hq_img_paths = pickle.load(fp)
-    #with open("datalists/idd_hq_anno_path_list.txt", "rb") as fp:
-    #    hq_anno_paths = pickle.load(fp)
-        
+if ds in ["idd_non_hq","idd_hq"]:
+
     with open("datalists/idd_images_path_list.txt", "rb") as fp:
         non_hq_img_paths = pickle.load(fp)
     with open("datalists/idd_anno_path_list.txt", "rb") as fp:
         non_hq_anno_paths = pickle.load(fp)
     
-    images = non_hq_img_paths #+ hq_img_paths
-    annos = non_hq_anno_paths#hq_anno_paths + 
+    if idd_hq==True:
+        images = non_hq_img_paths + hq_img_paths
+        annos = non_hq_anno_paths+hq_anno_paths 
+    else:
+        images = non_hq_img_paths 
+        annos = non_hq_anno_paths
     dataset_train = IDD(images,annos,get_transform(train=True))
     dl =  torch.utils.data.DataLoader(dataset_train, batch_size=batch_size, shuffle=True, num_workers=4,collate_fn=utils.collate_fn)
-    
-    
     
 print("Loading done")
 

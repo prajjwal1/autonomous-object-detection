@@ -1,52 +1,43 @@
 ## Domain adaptive Object detection for autonomous navigation 
 This repository provides core support for performing object detection on navigation datasets. Support for 3D object detection and domain adaptation are in experimental phase and will be added later.
+
 ## Prerequisites
 - Pytorch >=1.1
 - torchvision ==0.3
 
 ## Datasets
-This work provides support for these datasets related to object detection:
-- Cityscapes 
-- India Driving Dataset
-- Berkeley Deep drive
+This work provides support for the following datasets (related to object detection for autonomous navigation):
+- [India Driving Dataset](https://idd.insaan.iiit.ac.in/)
+- [Berkeley Deep drive](https://bdd-data.berkeley.edu/)
+- [Cityscapes](https://www.cityscapes-dataset.com/) 
 
 Directory structure :
 ```
 +-- data
 |   +-- bdd100k
-|   +-- IDD
+|   +-- IDD_Detection
 |   +-- cityscapes
 +-- autonmous-object-detection
 .......
 ```
+### Getting started
+1. Download the required dataset
+2. Setup dataset paths in `cfg.py`
+3. Create datalists
+4. Start training and evaluating
+
 ## Documentation
+
+### Setting up Config
+By default, all paths and hyperparameters are loaded from `cfg.py`. Users are required to specify paths of dataset and hyperparameters once.
+This can also be overriden by user 
 
 ### Datalists
 We use something called datalists. Datalists are lists which contains path to images and labels. This is because some of the images don't have proper labels. Datalists ensure that the lists only contain structured usable data (dataloader would work seamlessly). Data cleaning happens in the process.
-Use these scripts to generate your own datalists. 
 
-You need to specify a proper path in the following scripts and then it would run seamlessly.
-
-For BDD100K :
-
+You need to specify a proper path and `ds` variable in the `cfg.py` to specify the dataset you want to use.
 ```
-$ python3 get_datalists_bdd100k.py
-```
-
-For IDD :
-
-```
-$ python3 get_datalists_idd_non_hq.py   
-
-$ python3 get_datalists_idd_hq.py       
-```
-
-for non HQ image set and HQ image set respectively.
-
-For cityscapes :
-
-```
-$ python3 get_datalists_cityscapes.py
+python3 get_datalists.py
 ```
 
 ### Datasets
@@ -107,7 +98,9 @@ $ python train_baseline.py
 ```
 
 ### Evaluation
-It performs evaluation in COCO style. Users need to specify saved model path on which evaluation is supposed to occur. CocoAPI needs to be compiled.
+Evaluation in performed in COCO format. Users need to specify saved `model_name` in `cfg.py`on which evaluation is supposed to occur.
+
+CocoAPI needs to be compiled. first
 ```
 $ cd cocoapi/PythonAPI
 $ python setup.py build_ext install
@@ -126,3 +119,7 @@ Refer to `inference.ipynb` for plotting images with model's predictions.
 ### Example
 
 ![img](assets/eval_baseline_idd.PNG)
+
+### Contribtuion
+
+Feel free to send PRs related to any bugs, support for more datasets etc. 
