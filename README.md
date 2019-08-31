@@ -1,9 +1,10 @@
 ## Domain adaptive Object detection for autonomous navigation 
-This repository provides core support for performing object detection on navigation datasets. Support for 3D object detection and domain adaptation are in experimental phase and will be added later.
+This repository provides core support for performing object detection on navigation datasets. Support for 3D object detection and domain adaptation are in experimental phase and will be added later. This project provides support for training, evaluation, inference, visualization.
 
 ## Prerequisites
 - Pytorch >=1.1
 - torchvision ==0.3
+- tensorboardX (optional, required for visualizing)
 
 ## Datasets
 This work provides support for the following datasets (related to object detection for autonomous navigation):
@@ -112,9 +113,16 @@ Now evaluation can be performed.
 $ python3 evaluation_baseline.py
 ```
 
-### Visualization
+### Inference
 
 Refer to `inference.ipynb` for plotting images with model's predictions.
+
+### Visualization
+
+By default, tensorboard will start logging `loss` and `learning_rate` in `engine.py`. You can start by using
+```
+$ tensorboard /path/ --port=8888
+```
 
 ### Example
 
