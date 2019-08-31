@@ -7,8 +7,12 @@ from imports import *
 from coco_utils import get_coco_api_from_dataset
 import utils
 from coco_eval import CocoEvaluator
+from tensorboardX import SummaryWriter
+writer = SummaryWriter()
+num_iters=0
 
 def train_one_epoch(model, optimizer, data_loader, device, epoch, print_freq):
+    global num_iters
     model.train()
     metric_logger = utils.MetricLogger(delimiter="  ")
     metric_logger.add_meter('lr', utils.SmoothedValue(window_size=1, fmt='{value:.6f}'))
@@ -20,22 +24,28 @@ def train_one_epoch(model, optimizer, data_loader, device, epoch, print_freq):
         warmup_iters = min(1000, len(data_loader) - 1)
 
         lr_scheduler = utils.warmup_lr_scheduler(optimizer, warmup_iters, warmup_factor)
-
+        
+    
+        
     for images, targets in metric_logger.log_every(data_loader, print_freq, header):
         images = list(image.to(device) for image in images)
             
         targets = [{k: v.to(device) for k, v in t.items()} for t in targets]
 
         loss_dict = model(images, targets)
-
+        num_iters+=1
         losses = sum(loss for loss in loss_dict.values())
-
+        
         # reduce losses over all GPUs for logging purposes
         loss_dict_reduced = utils.reduce_dict(loss_dict)
         losses_reduced = sum(loss for loss in loss_dict_reduced.values())
 
         loss_value = losses_reduced.item()
-
+        
+        writer.add_scalar('Loss/train', loss_value, num_iters)
+        writer.add_scalar('Learning rate',optimizer.param_groups[0]["lr"],num_iters)
+        writer.add_scalar('Momentum',optimizer.param_groups[0]["momentum"],num_iters)
+        
         if not math.isfinite(loss_value):
             print("Loss is {}, stopping training".format(loss_value))
             print(loss_dict_reduced)
@@ -50,6 +60,7 @@ def train_one_epoch(model, optimizer, data_loader, device, epoch, print_freq):
         
         metric_logger.update(loss=losses_reduced, **loss_dict_reduced)
         metric_logger.update(lr=optimizer.param_groups[0]["lr"])
+        
 
 def _get_iou_types(model):
     model_without_ddp = model
@@ -70,23 +81,18 @@ def evaluate(model, data_loader, device):
     model.eval()
     metric_logger = utils.MetricLogger(delimiter="  ")
     header = 'Test:'
-    model.cuda()
-    #coco = get_coco_api_from_dataset(data_loader.dataset)
+    model.to(device)
     iou_types = _get_iou_types(model)
     coco_evaluator = CocoEvaluator(coco, iou_types)
-
+    to_tensor = torchvision.transforms.ToTensor()
     for image, targets in metric_logger.log_every(data_loader, 100, header):
-        #print(image)
-        #image = torchvision.transforms.ToTensor()(image[0])  # Returns a scaler tuple
-        #print(image.shape)                                # dim of image 1080x1920
         
-        image = torchvision.transforms.ToTensor()(image[0]).to(device)
-        #image = img.to(device) for img in image
+        image = list(to_tensor(img).to(device) for img in image)
         targets = [{k: v.to(device) for k, v in t.items()} for t in targets]
         torch.cuda.synchronize()
         model_time = time.time()
         
-        outputs = model([image])
+        outputs = model(image)
 
         outputs = [{k: v.to(cpu_device) for k, v in t.items()} for t in outputs]
         model_time = time.time() - model_time
