@@ -1,3 +1,5 @@
+# Adapted from torchvision, changes include tensorboard support
+
 import math
 import sys
 import time
@@ -24,8 +26,6 @@ def train_one_epoch(model, optimizer, data_loader, device, epoch, print_freq):
         warmup_iters = min(1000, len(data_loader) - 1)
 
         lr_scheduler = utils.warmup_lr_scheduler(optimizer, warmup_iters, warmup_factor)
-        
-    
         
     for images, targets in metric_logger.log_every(data_loader, print_freq, header):
         images = list(image.to(device) for image in images)
@@ -75,7 +75,6 @@ def evaluate(model, data_loader, device):
     iou_types = ["bbox"]
     coco = get_coco_api_from_dataset(data_loader.dataset)
     n_threads = torch.get_num_threads()
-    # FIXME remove this and make paste_masks_in_image run on the GPU
     torch.set_num_threads(1)
     cpu_device = torch.device("cpu")
     model.eval()

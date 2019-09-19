@@ -104,7 +104,7 @@ $ python train_baseline.py
 ### Evaluation
 Evaluation in performed in COCO format. Users need to specify saved `model_name` in `cfg.py`on which evaluation is supposed to occur.
 
-CocoAPI needs to be compiled. first
+CocoAPI needs to be compiled. first download it from [here](https://github.com/cocodataset/cocoapi)
 ```
 $ cd cocoapi/PythonAPI
 $ python setup.py build_ext install

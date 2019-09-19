@@ -1,3 +1,5 @@
+# Adapted from torchvision, changes made to support evaluation on idd and bdd100k
+
 from imports import *
 from datasets.idd import *
 from datasets.bdd import *
