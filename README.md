@@ -116,6 +116,9 @@ Now evaluation can be performed.
 $ python3 evaluation_baseline.py
 ```
 
+## Incremental learning support
+Please refer to `exp` directory, jupyter notebooks are self explanatory
+
 ### Inference
 
 Refer to `inference.ipynb` for plotting images with model's predictions.
