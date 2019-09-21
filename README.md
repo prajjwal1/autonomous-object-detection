@@ -132,7 +132,7 @@ $ tensorboard /path/ --port=8888
 
 ### Example
 
-![img](assets/eval_baseline_idd.PNG)
+![img](assets/eval_baseline_idd.png)
 
 ### Contribtuion
 
