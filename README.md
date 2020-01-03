@@ -1,8 +1,8 @@
-## Domain adaptive Object detection for autonomous navigation 
+## Object detection for autonomous navigation 
 This repository provides core support for performing object detection on navigation datasets. Support for 3D object detection and domain adaptation are in experimental phase and will be added later. This project provides support for training, evaluation, inference, visualization.
 
 ### This repo also contains the code for:
-- On Generalizing Detection Models for Unconstrained Environments (ICCV W 2019) in `exp`
+- [On Generalizing Detection Models for Unconstrained Environments (ICCV W 2019)](https://arxiv.org/abs/1909.13080) in `exp`
 
 ## Prerequisites
 - Pytorch >=1.1
