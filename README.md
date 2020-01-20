@@ -5,8 +5,8 @@ This repository provides core support for performing object detection on navigat
 - [On Generalizing Detection Models for Unconstrained Environments (ICCV W 2019)](https://arxiv.org/abs/1909.13080) in `exp`
 
 ## Prerequisites
-- Pytorch >=1.1
-- torchvision ==0.3
+- Pytorch >= 1.1
+- torchvision >= 0.3
 - tensorboardX (optional, required for visualizing)
 
 ## Datasets
