@@ -4,6 +4,8 @@ This repository provides core support for performing object detection on navigat
 ### This repo also contains the code for:
 - [On Generalizing Detection Models for Unconstrained Environments (ICCV W 2019)](https://arxiv.org/abs/1909.13080) in `exp`
 
+#### NEW: Pretrained models are now available
+
 ## Prerequisites
 - Pytorch >= 1.1
 - torchvision >= 0.3
@@ -115,6 +117,9 @@ Now evaluation can be performed.
 ```
 $ python3 evaluation_baseline.py
 ```
+
+## Pretrained models
+Pretrained Models for IDD and BDD100k are available [here](https://drive.google.com/open?id=1EGMce4aHlo7QpvMsxXgato87gQo8aYrk). For BDD100k, you can straightaway use the model. This model was used to perform incremental learning as mentioned in the paper on IDD. As a result, the base network (model for BDD100k) was reused with new task specific layers to train on IDD. 
 
 ## Incremental learning support
 Please refer to `exp` directory, jupyter notebooks are self explanatory
