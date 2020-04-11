@@ -1,11 +1,12 @@
-from imports import *
-from cfg import *
 import pickle
+import time
+
+from cfg import *
+from coco_eval import CocoEvaluator
+from coco_utils import get_coco_api_from_dataset
 from datasets.bdd import *
 from datasets.idd import *
-from coco_eval import CocoEvaluator
-import time
-from coco_utils import get_coco_api_from_dataset
+from imports import *
 
 device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
 

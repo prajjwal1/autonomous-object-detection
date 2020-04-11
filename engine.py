@@ -3,13 +3,14 @@
 import math
 import sys
 import time
-import torch
 
-from imports import *
-from coco_utils import get_coco_api_from_dataset
+from tensorboardX import SummaryWriter
+
+import torch
 import utils
 from coco_eval import CocoEvaluator
-from tensorboardX import SummaryWriter
+from coco_utils import get_coco_api_from_dataset
+from imports import *
 
 writer = SummaryWriter()
 num_iters = 0

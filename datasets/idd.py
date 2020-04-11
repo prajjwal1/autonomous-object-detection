@@ -1,17 +1,21 @@
-import torch, os
-from pathlib import Path
-import xml.etree.ElementTree as ET
-from torch.utils.data import Dataset, DataLoader, SequentialSampler, RandomSampler
-import torchvision
-from torchvision import transforms
-from PIL import Image
-import numpy as np
-from torch import Tensor, FloatTensor
-import utils
-import transforms as T
-from coco_eval import CocoEvaluator
+import os
 import time
+import xml.etree.ElementTree as ET
+from pathlib import Path
+
+import numpy as np
+import torchvision
+from PIL import Image
+from torchvision import transforms
+
+import torch
+import transforms as T
+import utils
+from coco_eval import CocoEvaluator
 from coco_utils import get_coco_api_from_dataset
+from torch import FloatTensor, Tensor
+from torch.utils.data import (DataLoader, Dataset, RandomSampler,
+                              SequentialSampler)
 
 
 def get_transform(train):

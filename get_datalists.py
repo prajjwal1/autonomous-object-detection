@@ -1,5 +1,5 @@
-from imports import *
 from cfg import *
+from imports import *
 
 device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
 

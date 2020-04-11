@@ -1,10 +1,11 @@
-from detection import faster_rcnn
-from datasets.idd import *
-from datasets.bdd import *
 import pickle
-from coco_eval import CocoEvaluator
 import time
+
+from coco_eval import CocoEvaluator
 from coco_utils import get_coco_api_from_dataset
+from datasets.bdd import *
+from datasets.idd import *
+from detection import faster_rcnn
 
 device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
 

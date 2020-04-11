@@ -1,15 +1,18 @@
-import torch, os
+import json
+import os
 from pathlib import Path
-from torch.utils.data import Dataset
-import torchvision
-from torchvision import transforms
+
 import numpy as np
-from torch import Tensor
-import utils, json
+import torchvision
 from PIL import Image
-import transforms as T
+from torchvision import transforms
 from tqdm import tqdm
-from torch import nn
+
+import torch
+import transforms as T
+import utils
+from torch import Tensor, nn
+from torch.utils.data import Dataset
 
 
 def get_ground_truths(train_img_path_list, anno_data):

@@ -1,8 +1,9 @@
-from imports import *
-from datasets.idd import *
-from datasets.bdd import *
 from collections import OrderedDict
+
 from cfg import *
+from datasets.bdd import *
+from datasets.idd import *
+from imports import *
 
 batch_size = 16
 

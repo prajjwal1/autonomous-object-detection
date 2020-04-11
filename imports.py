@@ -1,23 +1,27 @@
-import torch, os
-from pathlib import Path
+import json
+import math
+import os
+import pickle
 import xml.etree.ElementTree as ET
 from glob import glob
-import matplotlib.pyplot as plt
-from torch.utils.data import Dataset, DataLoader, SequentialSampler, RandomSampler
-import torchvision
-from torchvision import transforms
-from PIL import Image
-import numpy as np
+from pathlib import Path
+
 import matplotlib
-import matplotlib.pyplot as plt
 import matplotlib.patches as patches
-from torch import Tensor, FloatTensor
-from engine import *
-import utils, json, pickle
-import transforms as T
+import matplotlib.pyplot as plt
+import numpy as np
+import torchvision
+from PIL import Image
+from torchvision import transforms
 from tqdm import tqdm
-from torch import nn
-import math
+
+import torch
+import transforms as T
+import utils
+from engine import *
+from torch import FloatTensor, Tensor, nn
+from torch.utils.data import (DataLoader, Dataset, RandomSampler,
+                              SequentialSampler)
 
 COLOR = "yellow"
 matplotlib.rcParams["text.color"] = COLOR

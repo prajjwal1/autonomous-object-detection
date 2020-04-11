@@ -1,15 +1,20 @@
-from transforms import *
-import torch, os
-from torch.utils.data import Dataset, DataLoader, SequentialSampler, RandomSampler
-import torchvision
-from torchvision import transforms
-from PIL import Image
-import numpy as np
-from torch import Tensor, FloatTensor
-import utils, pickle
-import transforms as T
 import json
+import os
+import pickle
+
+import numpy as np
+import torchvision
+from PIL import Image
+from torchvision import transforms
+
+import torch
+import transforms as T
+import utils
+from torch import FloatTensor, Tensor
+from torch.utils.data import (DataLoader, Dataset, RandomSampler,
+                              SequentialSampler)
 from torch.utils.data.dataloader import default_collate
+from transforms import *
 
 
 class Cityscapes(torch.utils.data.Dataset):

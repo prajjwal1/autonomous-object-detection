@@ -1,18 +1,21 @@
-import torch, os
-from pathlib import Path
+import os
 import xml.etree.ElementTree as ET
 from glob import glob
-import matplotlib.pyplot as plt
-from torch.utils.data import Dataset, DataLoader, SequentialSampler, RandomSampler
-import torchvision
-from torchvision import transforms
-from PIL import Image
-import numpy as np
+from pathlib import Path
+
 import matplotlib
 import matplotlib.pyplot as plt
-from torch import Tensor, FloatTensor
-import utils
+import numpy as np
+import torchvision
+from PIL import Image
+from torchvision import transforms
+
+import torch
 import transforms as T
+import utils
+from torch import FloatTensor, Tensor
+from torch.utils.data import (DataLoader, Dataset, RandomSampler,
+                              SequentialSampler)
 
 
 def get_transform(train):

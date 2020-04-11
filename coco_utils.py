@@ -1,16 +1,15 @@
 import copy
 import os
+
+import torchvision
 from PIL import Image
+from tqdm import tqdm
 
 import torch
 import torch.utils.data
-import torchvision
-
+import transforms as T
 from pycocotools import mask as coco_mask
 from pycocotools.coco import COCO
-
-import transforms as T
-from tqdm import tqdm
 
 
 class FilterAndRemapCocoCategories(object):
