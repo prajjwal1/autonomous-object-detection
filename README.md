@@ -122,7 +122,14 @@ $ python3 evaluation_baseline.py
 Pretrained Models for IDD and BDD100k are available [here](https://drive.google.com/open?id=1EGMce4aHlo7QpvMsxXgato87gQo8aYrk). For BDD100k, you can straightaway use the model. This model was used to perform incremental learning as mentioned in the paper on IDD. As a result, the base network (model for BDD100k) was reused with new task specific layers to train on IDD. 
 
 ## Incremental learning support
-Please refer to `exp` directory, jupyter notebooks are self explanatory
+Please refer to `exp` directory, jupyter notebooks are self explanatory. Here are the results from the paper.
+
+| S and T                      | Epoch               | Active Components (with LR)                            | LR Range            | map (%) at specified epochs                          |
+|------------------------------|---------------------|--------------------------------------------------------|---------------------|------------------------------------------------------|
+| <br>BDD -> IDD<br>IDD -> BDD | <br>5<br>Eval       | +ROI Head(1e-3)                                        | <br>1e-3, 6e-3<br>- | <br>24.3<br>45.7                                     |
+| BDD -> IDD<br>IDD -> BDD     | <br>5,9<br>Eval     | +RPN (1e-4)<br>+ROI head (1e-3)                        | <br>1e-4, 6e-4<br>- | <br>24.7, 24.9<br><br>45.3, 45.0<br>                 |
+| BDD -> IDD<br>IDD -> BDD     | <br>1,5,6,7<br>Eval | <br>+RPN (1e-4)+ROI head (1e-3)                        | <br>1e-4, 6e-3<br>- | <br>24.3, 24.9, 24.9, 25.0<br>45.7, 44.8, 44.7, 44.7 |
+| BDD -> IDD<br>IDD -> BDD     | <br>1,5,10<br>Eval  | <br>+ROI head (1e-3)<br><br>+RPN (4e-4) +FPN(2e-4)<br> | <br>1e-4, 6e-3<br>- | <br>24.9, 25.4, 25.9<br><br>45.2, 43.9, 43.3<br>     |
 
 ### Inference
 
