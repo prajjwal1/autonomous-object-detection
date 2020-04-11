@@ -10,42 +10,44 @@ from coco_utils import get_coco_api_from_dataset
 import utils
 from coco_eval import CocoEvaluator
 from tensorboardX import SummaryWriter
+
 writer = SummaryWriter()
-num_iters=0
+num_iters = 0
+
 
 def train_one_epoch(model, optimizer, data_loader, device, epoch, print_freq):
     global num_iters
     model.train()
     metric_logger = utils.MetricLogger(delimiter="  ")
-    metric_logger.add_meter('lr', utils.SmoothedValue(window_size=1, fmt='{value:.6f}'))
-    header = 'Epoch: [{}]'.format(epoch)
+    metric_logger.add_meter("lr", utils.SmoothedValue(window_size=1, fmt="{value:.6f}"))
+    header = "Epoch: [{}]".format(epoch)
 
     lr_scheduler = None
     if epoch == 0:
-        warmup_factor = 1. / 1000
+        warmup_factor = 1.0 / 1000
         warmup_iters = min(1000, len(data_loader) - 1)
 
         lr_scheduler = utils.warmup_lr_scheduler(optimizer, warmup_iters, warmup_factor)
-        
+
     for images, targets in metric_logger.log_every(data_loader, print_freq, header):
         images = list(image.to(device) for image in images)
-            
+
         targets = [{k: v.to(device) for k, v in t.items()} for t in targets]
 
         loss_dict = model(images, targets)
-        num_iters+=1
+        num_iters += 1
         losses = sum(loss for loss in loss_dict.values())
-        
+
         # reduce losses over all GPUs for logging purposes
         loss_dict_reduced = utils.reduce_dict(loss_dict)
         losses_reduced = sum(loss for loss in loss_dict_reduced.values())
 
         loss_value = losses_reduced.item()
-        
-        writer.add_scalar('Loss/train', loss_value, num_iters)
-        writer.add_scalar('Learning rate',optimizer.param_groups[0]["lr"],num_iters)
-        writer.add_scalar('Momentum',optimizer.param_groups[0]["momentum"],num_iters)
-        
+
+        writer.add_scalar("Loss/train", loss_value, num_iters)
+        writer.add_scalar("Learning rate", optimizer.param_groups[0]["lr"], num_iters)
+        writer.add_scalar("Momentum", optimizer.param_groups[0]["momentum"], num_iters)
+
         if not math.isfinite(loss_value):
             print("Loss is {}, stopping training".format(loss_value))
             print(loss_dict_reduced)
@@ -57,10 +59,10 @@ def train_one_epoch(model, optimizer, data_loader, device, epoch, print_freq):
 
         if lr_scheduler is not None:
             lr_scheduler.step()
-        
+
         metric_logger.update(loss=losses_reduced, **loss_dict_reduced)
         metric_logger.update(lr=optimizer.param_groups[0]["lr"])
-        
+
 
 def _get_iou_types(model):
     model_without_ddp = model
@@ -79,24 +81,27 @@ def evaluate(model, data_loader, device):
     cpu_device = torch.device("cpu")
     model.eval()
     metric_logger = utils.MetricLogger(delimiter="  ")
-    header = 'Test:'
+    header = "Test:"
     model.to(device)
     iou_types = _get_iou_types(model)
     coco_evaluator = CocoEvaluator(coco, iou_types)
     to_tensor = torchvision.transforms.ToTensor()
     for image, targets in metric_logger.log_every(data_loader, 100, header):
-        
+
         image = list(to_tensor(img).to(device) for img in image)
         targets = [{k: v.to(device) for k, v in t.items()} for t in targets]
         torch.cuda.synchronize()
         model_time = time.time()
-        
+
         outputs = model(image)
 
         outputs = [{k: v.to(cpu_device) for k, v in t.items()} for t in outputs]
         model_time = time.time() - model_time
 
-        res = {target["image_id"].item(): output for target, output in zip(targets, outputs)}
+        res = {
+            target["image_id"].item(): output
+            for target, output in zip(targets, outputs)
+        }
         evaluator_time = time.time()
         coco_evaluator.update(res)
         evaluator_time = time.time() - evaluator_time
@@ -111,5 +116,4 @@ def evaluate(model, data_loader, device):
     coco_evaluator.accumulate()
     coco_evaluator.summarize()
     torch.set_num_threads(n_threads)
-    return coco_evaluator    
-
+    return coco_evaluator

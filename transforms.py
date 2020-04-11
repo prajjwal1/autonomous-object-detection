@@ -3,6 +3,7 @@ import torch
 
 from torchvision.transforms import functional as F
 
+
 class Compose(object):
     def __init__(self, transforms):
         self.transforms = transforms
