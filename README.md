@@ -6,14 +6,13 @@ This repository provides core support for performing object detection on navigat
 
 If you use the code in any way, please consider citing:
 ```
-@INPROCEEDINGS{9022160, author={P. {Bhargava}},
-             booktitle={2019 IEEE/CVF International Conference on Computer Vision Workshop (ICCVW)}, 
-             title={On Generalizing Detection Models for Unconstrained Environments}, 
-             year={2019}, 
-             volume={},
-              number={}, 
-              pages={4296-4301},
-              } 
+@InProceedings{Bhargava_2019_ICCV,
+author = {Bhargava, Prajjwal},
+title = {On Generalizing Detection Models for Unconstrained Environments},
+booktitle = {Proceedings of the IEEE/CVF International Conference on Computer Vision (ICCV) Workshops},
+month = {Oct},
+year = {2019}
+}
 ```
 
 #### NEW: Pretrained models are now available
