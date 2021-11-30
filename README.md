@@ -4,6 +4,18 @@ This repository provides core support for performing object detection on navigat
 ### This repo also contains the code for:
 - [On Generalizing Detection Models for Unconstrained Environments (ICCV W 2019)](https://arxiv.org/abs/1909.13080) in `exp`
 
+If you use the code in any way, please consider citing:
+```
+@INPROCEEDINGS{9022160, author={P. {Bhargava}},
+             booktitle={2019 IEEE/CVF International Conference on Computer Vision Workshop (ICCVW)}, 
+             title={On Generalizing Detection Models for Unconstrained Environments}, 
+             year={2019}, 
+             volume={},
+              number={}, 
+              pages={4296-4301},
+              } 
+```
+
 #### NEW: Pretrained models are now available
 
 ## Prerequisites
@@ -145,7 +157,3 @@ $ tensorboard /path/ --port=8888
 ### Example
 
 ![img](assets/eval_baseline_idd.png)
-
-### Contribtuion
-
-Feel free to send PRs related to any bugs, support for more datasets etc. 
