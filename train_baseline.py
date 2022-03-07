@@ -24,7 +24,7 @@ if ds == "bdd100k":
     with open("datalists/bdd100k_val_images_path.txt", "rb") as fp:
         val_img_path_list = pickle.load(fp)
 
-    dataset_train = dset = BDD(
+    dataset_train = BDD(
         train_img_path_list, train_anno_json_path, get_transform(train=True)
     )
     dl = torch.utils.data.DataLoader(
