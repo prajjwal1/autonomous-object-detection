@@ -48,8 +48,8 @@ def get_ground_truths(train_img_path_list, anno_data):
                 bboxes.append(bbox)
                 labels.append(cls)
 
-        total_bboxes.append(Tensor(bboxes))
-        total_labels.append(Tensor(labels))
+        total_bboxes.append(torch.tensor(bboxes))
+        total_labels.append(torch.tensor(labels))
         bboxes = []
         labels = []
 
@@ -107,7 +107,7 @@ class BDD(torch.utils.data.Dataset):
         bboxes = self.total_bboxes_list[idx]
         area = (bboxes[:, 3] - bboxes[:, 1]) * (bboxes[:, 2] - bboxes[:, 0])
 
-        img_id = Tensor([idx])
+        img_id = torch.tensor([idx])
         iscrowd = torch.zeros(len(bboxes,), dtype=torch.int64)
         target = {}
         target["boxes"] = bboxes
