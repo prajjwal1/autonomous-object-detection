@@ -66,8 +66,7 @@ def get_model(num_classes):
     model.roi_heads.box_predictor = torchvision.models.detection.faster_rcnn.FastRCNNPredictor(
         in_features, num_classes
     )  # replace the pre-trained head with a new one
-    return model.cuda()
-
+    return model.cuda() if torch.cuda.is_available() else model.cpu()
 
 print("Model initialization")
 model = get_model(len(dataset_train.classes))
