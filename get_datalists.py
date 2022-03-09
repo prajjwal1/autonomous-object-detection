@@ -5,8 +5,8 @@ device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cp
 
 if ds == "bdd100k":
     print("Creating datalist for Berkeley Deep Drive")
-    root_img_path = os.path.join(bdd_path, "images", "100k")
-    root_anno_path = os.path.join(bdd_path, "labels")
+    root_img_path = os.path.join(bdd_path, "bdd100k_images_100k", "images", "100k")
+    root_anno_path = os.path.join(bdd_path, "bdd100k_labels_release", "labels")
 
     train_img_path = root_img_path + "/train/"
     val_img_path = root_img_path + "/val/"

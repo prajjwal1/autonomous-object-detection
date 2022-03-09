@@ -8,8 +8,8 @@ from imports import *
 device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
 
 if ds == "bdd100k":
-    root_img_path = os.path.join(bdd_path, "bdd100k", "images", "100k")
-    root_anno_path = os.path.join(bdd_path, "bdd100k", "labels")
+    root_img_path = os.path.join(bdd_path, "bdd100k_images_100k", "images", "100k")
+    root_anno_path = os.path.join(bdd_path, "bdd100k_labels_release", "labels")
 
     train_img_path = root_img_path + "/train/"
     val_img_path = root_img_path + "/val/"
@@ -24,7 +24,7 @@ if ds == "bdd100k":
     with open("datalists/bdd100k_val_images_path.txt", "rb") as fp:
         val_img_path_list = pickle.load(fp)
 
-    dataset_train = dset = BDD(
+    dataset_train = BDD(
         train_img_path_list, train_anno_json_path, get_transform(train=True)
     )
     dl = torch.utils.data.DataLoader(
@@ -66,8 +66,7 @@ def get_model(num_classes):
     model.roi_heads.box_predictor = torchvision.models.detection.faster_rcnn.FastRCNNPredictor(
         in_features, num_classes
     )  # replace the pre-trained head with a new one
-    return model.cuda()
-
+    return model.cuda() if torch.cuda.is_available() else model.cpu()
 
 print("Model initialization")
 model = get_model(len(dataset_train.classes))

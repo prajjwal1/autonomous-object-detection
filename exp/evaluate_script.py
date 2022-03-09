@@ -35,8 +35,8 @@ val_dl_idd = torch.utils.data.DataLoader(
     collate_fn=utils.collate_fn,
 )
 
-root_img_path = os.path.join(bdd_path, "images", "100k")
-root_anno_path = os.path.join(bdd_path, "labels")
+root_img_path = os.path.join(bdd_path, "bdd100k_images_100k", "images", "100k")
+root_anno_path = os.path.join(bdd_path, "bdd100k_labels_release", "labels")
 
 val_img_path = root_img_path + "/val/"
 val_anno_json_path = root_anno_path + "/bdd100k_labels_images_val.json"
